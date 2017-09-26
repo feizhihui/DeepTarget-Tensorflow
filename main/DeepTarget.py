@@ -39,6 +39,7 @@ class DeepTarget(object):
         biase = tf.Variable(tf.truncated_normal([2], stddev=0.1))
         logits = tf.matmul(output, weights) + biase
         loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.labels, logits=logits)
+        self.scores = tf.nn.softmax(logits)
         self.mean_loss = tf.reduce_mean(loss)
         self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(self.mean_loss)
         self.predictions = tf.cast(tf.argmax(logits, axis=1), tf.int32)
