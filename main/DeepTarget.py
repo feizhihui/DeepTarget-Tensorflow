@@ -8,9 +8,9 @@ class DeepTarget(object):
     def __init__(self, step_num=40, hidden_num=30, learning_rate=0.01):
         # placeholder list
         self.input_seq1 = tf.placeholder(tf.int32, [None, step_num])
-        input_seq1_1hot = tf.one_hot(self.input_seq1, depth=3, dtype=tf.float32)
+        input_seq1_1hot = tf.one_hot(self.input_seq1, depth=4, dtype=tf.float32)
         self.input_seq2 = tf.placeholder(tf.int32, [None, step_num])
-        input_seq2_1hot = tf.one_hot(self.input_seq2, depth=3, dtype=tf.float32)
+        input_seq2_1hot = tf.one_hot(self.input_seq2, depth=4, dtype=tf.float32)
 
         self.labels = tf.placeholder(tf.int32, [None])
         p_inputs_seq1 = [tf.squeeze(t, [1]) for t in tf.split(input_seq1_1hot, step_num, 1)]
