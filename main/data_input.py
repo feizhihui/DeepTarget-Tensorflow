@@ -71,7 +71,6 @@ class DataMaster(object):
             mRNAs.add(sample[1])
         return list(mRNAs)
 
-    #
     def transpose_seq(self, seq_list):
         seq1s = []
         for seq in seq_list:
