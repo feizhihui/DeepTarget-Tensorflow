@@ -1,0 +1,10 @@
+
+# idea config
+.idea
+
+# pycache
+main/__pycache__
+
+# dataset
+model/log
+model/*.txt
