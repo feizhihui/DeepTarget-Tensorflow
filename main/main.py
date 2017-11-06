@@ -18,8 +18,8 @@ hidden_num = 30
 step_num = 40
 learning_rate = 0.01
 display_num = 100
-miRNA_auto_epoch = 40  # 13
-mRNA_auto_epoch = 40  # 13
+miRNA_auto_epoch = 40
+mRNA_auto_epoch = 40
 Pred_rnn_epoch = 20
 
 
