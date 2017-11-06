@@ -9,9 +9,9 @@ code = {'A': 0, 'G': 1, 'U': 2, 'C': 3}
 
 
 class DataMaster(object):
-    def __init__(self):
+    def __init__(self, trainpath, testpath):
         self.train_data = []
-        with open('trainset1.txt', 'r') as file:
+        with open(trainpath, 'r') as file:
             for line in file.readlines():
                 field = line.split()
                 miRNA = field[2]
@@ -20,7 +20,7 @@ class DataMaster(object):
                 self.train_data.append((miRNA, mRNA, label))
         random.shuffle(self.train_data)
         self.test_data = []
-        with open('test_set_need_ok1.txt', 'r') as file:
+        with open(testpath, 'r') as file:
             for line in file.readlines():
                 field = line.split()
                 miRNA = field[2]
