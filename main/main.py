@@ -22,26 +22,22 @@ miRNA_auto_epoch = 40
 mRNA_auto_epoch = 40
 Pred_rnn_epoch = 20
 
+model = DeepTarget(step_num, hidden_num, learning_rate)
+master = data_input.DataMaster()
+mi_ae = model.mi_ae
+m_ae = model.m_ae
 
-def train_and_test(trainpath, testpath, datapath, datalabel):
-    master = data_input.DataMaster(trainpath, testpath)
-    g = tf.Graph()
-    with g.as_default():
-        model = DeepTarget(step_num, hidden_num, learning_rate, True)
-        mi_ae = model.mi_ae  # miRNA Autoencoder
-        m_ae = model.m_ae  # mRNA Autoencoder
-    with tf.Session(graph=g) as sess:
-        sess.run(tf.global_variables_initializer())
-        miRNAseq = master.get_miRNA()
-        print('begin to training miRNA Autoencoder, sample number:', len(miRNAseq))
-        for j in range(miRNA_auto_epoch):
-            print('miRNA_auto_epoch:%d/%d' % (j + 1, miRNA_auto_epoch))
-            random.shuffle(miRNAseq)
-            for i, index in enumerate(range(0, len(miRNAseq), batch_num)):
-                x = miRNAseq[index:index + batch_num]
-                seq1 = master.transpose_seq(x)
-                loss_val, _ = sess.run([mi_ae.loss, mi_ae.train], {model.input_seq1: seq1})
-                if i % display_num == 0:
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+
+    print('begin to training miRNA Autoencoder', len(master.dataset))
+    for i, index in enumerate(range(0, len(master.dataset), batch_num)):
+        x = master.dataset[index:index + batch_num]
+        seq1 = master.transpose(x)[0]
+        loss_val, _ = sess.run([mi_ae.loss, mi_ae.train], {model.input_seq1: seq1})
+        if i % display_num == 0:
+            print("iter %d:" % (i + 1), loss_val)
+            break
                     print("iter %d:" % (i + 1), loss_val)
 
         mRNAseq = master.get_mRNA()
